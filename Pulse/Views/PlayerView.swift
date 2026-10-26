@@ -45,13 +45,13 @@ struct PlayerView: View {
                             .font(.caption.monospacedDigit()).foregroundStyle(.secondary)
                     }
                     HStack(spacing: 0) {
-                        Button { player.toggleShuffle() } label: { Image(systemName: "shuffle").foregroundStyle(player.shuffle ? .orange : .secondary).frame(maxWidth: .infinity, minHeight: 48) }.accessibilityLabel(player.shuffle ? "Выключить перемешивание" : "Перемешать")
+                        Button { player.toggleShuffle() } label: { Image(systemName: "shuffle").foregroundStyle(player.shuffle ? Color.orange : Color.secondary).frame(maxWidth: .infinity, minHeight: 48) }.accessibilityLabel(player.shuffle ? "Выключить перемешивание" : "Перемешать")
                         Button { player.previous() } label: { Image(systemName: "backward.end.fill").font(.title).frame(maxWidth: .infinity, minHeight: 48) }.accessibilityLabel("Предыдущий трек")
                         Button { player.toggle() } label: {
                             ZStack { Circle().fill(.orange).frame(width: 80, height: 80); Image(systemName: player.isPlaying ? "pause.fill" : "play.fill").font(.system(size: 29, weight: .semibold)).foregroundStyle(.black) }
                         }.accessibilityLabel(player.isPlaying ? "Пауза" : "Воспроизвести")
                         Button { player.next() } label: { Image(systemName: "forward.end.fill").font(.title).frame(maxWidth: .infinity, minHeight: 48) }.accessibilityLabel("Следующий трек")
-                        Button { player.repeatMode = player.repeatMode.next } label: { Image(systemName: player.repeatMode.symbol).foregroundStyle(player.repeatMode == .off ? .secondary : .orange).frame(maxWidth: .infinity, minHeight: 48) }.accessibilityLabel(player.repeatMode.label)
+                        Button { player.repeatMode = player.repeatMode.next } label: { Image(systemName: player.repeatMode.symbol).foregroundStyle(player.repeatMode == .off ? Color.secondary : Color.orange).frame(maxWidth: .infinity, minHeight: 48) }.accessibilityLabel(player.repeatMode.label)
                     }.foregroundStyle(.white)
                     HStack(spacing: 14) {
                         Image(systemName: "speaker.fill").foregroundStyle(.secondary).accessibilityHidden(true)
