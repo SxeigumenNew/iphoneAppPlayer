@@ -28,8 +28,9 @@ final class ImportPickerTests: XCTestCase {
         // Tap the visible centre as a finger would; still assert the actual
         // menu item and system picker below.
         addMusic.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
-        let menuItem = app.buttons[action]
-        XCTAssertTrue(menuItem.waitForExistence(timeout: 5))
+        let title = action == "importFolders" ? "Выбрать папки" : "Выбрать файлы"
+        let menuItem = app.buttons.matching(NSPredicate(format: "identifier == %@ OR label == %@", action, title)).firstMatch
+        XCTAssertTrue(menuItem.waitForExistence(timeout: 5), app.debugDescription)
         menuItem.tap()
 
         // This is the system document picker's Cancel button, rather than a
@@ -37,8 +38,8 @@ final class ImportPickerTests: XCTestCase {
         let cancel = app.buttons.matching(NSPredicate(format: "label IN %@", ["Cancel", "Отменить", "Отмена"])).firstMatch
         XCTAssertTrue(cancel.waitForExistence(timeout: 15), "System picker did not open for \(action).\n\(app.debugDescription)")
         cancel.tap()
-        let returned = NSPredicate(format: "isHittable == true")
-        expectation(for: returned, evaluatedWith: addMusic)
+        let returned = NSPredicate(format: "exists == false")
+        expectation(for: returned, evaluatedWith: cancel)
         waitForExpectations(timeout: 10)
         XCTAssertFalse(app.alerts.firstMatch.exists, "Cancelling import must not present an error")
     }
