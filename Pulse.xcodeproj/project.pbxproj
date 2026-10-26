@@ -1,0 +1,45 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {};
+	objectVersion = 56;
+	objects = {
+		B751540857FC15B376F85ADC = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pulse/Intents/PlaybackIntents.swift"; sourceTree = "<group>"; };
+		F61D800ADE9826925F8EEA62 = { isa = PBXBuildFile; fileRef = B751540857FC15B376F85ADC; };
+		3B65595E9C5ECD80DB6EF471 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pulse/Models/Library.swift"; sourceTree = "<group>"; };
+		C907A966AE700C612A86F942 = { isa = PBXBuildFile; fileRef = 3B65595E9C5ECD80DB6EF471; };
+		45C7DF32B52E0CBA9C7623CA = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pulse/PulseApp.swift"; sourceTree = "<group>"; };
+		B82BAB58543C42687BE2531A = { isa = PBXBuildFile; fileRef = 45C7DF32B52E0CBA9C7623CA; };
+		4272339634EDE272BA9F3D34 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pulse/Services/AudioImporter.swift"; sourceTree = "<group>"; };
+		B9AE1F2EA1A81FF49BCD763F = { isa = PBXBuildFile; fileRef = 4272339634EDE272BA9F3D34; };
+		D0B397A18E47F7C580E225F5 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pulse/Services/LibraryStore.swift"; sourceTree = "<group>"; };
+		49C0DCE29E3BF5458217EF97 = { isa = PBXBuildFile; fileRef = D0B397A18E47F7C580E225F5; };
+		B28DE591C471531FD1EE09C1 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pulse/Services/PlayerStore.swift"; sourceTree = "<group>"; };
+		4697BE844C5A790FA8DFFE0D = { isa = PBXBuildFile; fileRef = B28DE591C471531FD1EE09C1; };
+		3E9C875386DEC0001556455C = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pulse/Views/Components.swift"; sourceTree = "<group>"; };
+		7DDA236DA74DAF8ABEE5B356 = { isa = PBXBuildFile; fileRef = 3E9C875386DEC0001556455C; };
+		DF690EF4DC7860EA77A68092 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pulse/Views/PlayerView.swift"; sourceTree = "<group>"; };
+		A8978895969552D006CDFFA9 = { isa = PBXBuildFile; fileRef = DF690EF4DC7860EA77A68092; };
+		3E15A0D5019A044C8457B8AB = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pulse/Views/RootView.swift"; sourceTree = "<group>"; };
+		3252A4A11482C0630EE464ED = { isa = PBXBuildFile; fileRef = 3E15A0D5019A044C8457B8AB; };
+		8BF729FFE074CAEE622C0292 = { isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Pulse/Assets.xcassets; sourceTree = "<group>"; };
+		214FAD66617094FC1E2341C1 = { isa = PBXBuildFile; fileRef = 8BF729FFE074CAEE622C0292; };
+		9CEEC13202AFBF12EE3ABB99 = { isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Pulse/Info.plist; sourceTree = "<group>"; };
+		711A6108BA2CE6CA93DD47D6 = { isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		A8792157CB4F27FB949C035F = { isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pulse.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C8D2DC745BFC63C0D67231CE = { isa = PBXGroup; children = (B751540857FC15B376F85ADC, 3B65595E9C5ECD80DB6EF471, 45C7DF32B52E0CBA9C7623CA, 4272339634EDE272BA9F3D34, D0B397A18E47F7C580E225F5, B28DE591C471531FD1EE09C1, 3E9C875386DEC0001556455C, DF690EF4DC7860EA77A68092, 3E15A0D5019A044C8457B8AB, 8BF729FFE074CAEE622C0292, 9CEEC13202AFBF12EE3ABB99, 711A6108BA2CE6CA93DD47D6, 0A3E27B8CA818264D75C8D81,); sourceTree = "<group>"; };
+		0A3E27B8CA818264D75C8D81 = { isa = PBXGroup; children = (A8792157CB4F27FB949C035F,); name = Products; sourceTree = "<group>"; };
+		878A52FC5FF6A57D50B7B870 = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (F61D800ADE9826925F8EEA62, C907A966AE700C612A86F942, B82BAB58543C42687BE2531A, B9AE1F2EA1A81FF49BCD763F, 49C0DCE29E3BF5458217EF97, 4697BE844C5A790FA8DFFE0D, 7DDA236DA74DAF8ABEE5B356, A8978895969552D006CDFFA9, 3252A4A11482C0630EE464ED,); runOnlyForDeploymentPostprocessing = 0; };
+		41D311A605520FC7B8B9A980 = { isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (214FAD66617094FC1E2341C1,); runOnlyForDeploymentPostprocessing = 0; };
+		E2AA269EB967A8853A258BFA = { isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		34A04005BCAF206EEC990BD9 = { isa = PBXNativeTarget; buildConfigurationList = 1B672BF3DA427763BF644BE3; buildPhases = (878A52FC5FF6A57D50B7B870, E2AA269EB967A8853A258BFA, 41D311A605520FC7B8B9A980,); buildRules = (); dependencies = (); name = Pulse; productName = Pulse; productReference = A8792157CB4F27FB949C035F; productType = "com.apple.product-type.application"; };
+		2B23A31EEC75B029432F2445 = { isa = XCBuildConfiguration; buildSettings = { ALWAYS_SEARCH_USER_PATHS = NO; CLANG_ENABLE_MODULES = YES; CLANG_ENABLE_OBJC_ARC = YES; CLANG_WARN_DOCUMENTATION_COMMENTS = YES; GCC_C_LANGUAGE_STANDARD = gnu17; IPHONEOS_DEPLOYMENT_TARGET = 17.0; SDKROOT = iphoneos; SWIFT_VERSION = 5.0; DEBUG_INFORMATION_FORMAT = dwarf; ENABLE_TESTABILITY = YES; GCC_OPTIMIZATION_LEVEL = 0; SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)"; SWIFT_OPTIMIZATION_LEVEL = "-Onone"; }; name = Debug; };
+		EDDA600A3F771F810A8065C9 = { isa = XCBuildConfiguration; buildSettings = { ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor; CODE_SIGN_STYLE = Automatic; CURRENT_PROJECT_VERSION = 1; DEVELOPMENT_TEAM = ""; ENABLE_PREVIEWS = YES; GENERATE_INFOPLIST_FILE = NO; INFOPLIST_FILE = Pulse/Info.plist; LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks",); MARKETING_VERSION = 1.0; PRODUCT_BUNDLE_IDENTIFIER = com.example.Pulse; PRODUCT_NAME = "$(TARGET_NAME)"; SUPPORTED_PLATFORMS = "iphoneos iphonesimulator"; SUPPORTS_MACCATALYST = NO; SWIFT_EMIT_LOC_STRINGS = YES; SWIFT_STRICT_CONCURRENCY = minimal; TARGETED_DEVICE_FAMILY = 1; }; name = Debug; };
+		07CA1E69F6068DEA30A4DA6B = { isa = XCBuildConfiguration; buildSettings = { ALWAYS_SEARCH_USER_PATHS = NO; CLANG_ENABLE_MODULES = YES; CLANG_ENABLE_OBJC_ARC = YES; CLANG_WARN_DOCUMENTATION_COMMENTS = YES; GCC_C_LANGUAGE_STANDARD = gnu17; IPHONEOS_DEPLOYMENT_TARGET = 17.0; SDKROOT = iphoneos; SWIFT_VERSION = 5.0; DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym"; SWIFT_COMPILATION_MODE = wholemodule; SWIFT_OPTIMIZATION_LEVEL = "-O"; VALIDATE_PRODUCT = YES; }; name = Release; };
+		594BCDCC96599D88EF772A08 = { isa = XCBuildConfiguration; buildSettings = { ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor; CODE_SIGN_STYLE = Automatic; CURRENT_PROJECT_VERSION = 1; DEVELOPMENT_TEAM = ""; ENABLE_PREVIEWS = YES; GENERATE_INFOPLIST_FILE = NO; INFOPLIST_FILE = Pulse/Info.plist; LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks",); MARKETING_VERSION = 1.0; PRODUCT_BUNDLE_IDENTIFIER = com.example.Pulse; PRODUCT_NAME = "$(TARGET_NAME)"; SUPPORTED_PLATFORMS = "iphoneos iphonesimulator"; SUPPORTS_MACCATALYST = NO; SWIFT_EMIT_LOC_STRINGS = YES; SWIFT_STRICT_CONCURRENCY = minimal; TARGETED_DEVICE_FAMILY = 1; }; name = Release; };
+		76F8DEC3DFE0BDB465198890 = { isa = XCConfigurationList; buildConfigurations = (2B23A31EEC75B029432F2445, 07CA1E69F6068DEA30A4DA6B,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		1B672BF3DA427763BF644BE3 = { isa = XCConfigurationList; buildConfigurations = (EDDA600A3F771F810A8065C9, 594BCDCC96599D88EF772A08,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		244210E48437B6556980A702 = { isa = PBXProject; attributes = { BuildIndependentTargetsInParallel = YES; LastSwiftUpdateCheck = 1600; LastUpgradeCheck = 1600; TargetAttributes = { 34A04005BCAF206EEC990BD9 = { CreatedOnToolsVersion = 16.0; }; }; }; buildConfigurationList = 76F8DEC3DFE0BDB465198890; compatibilityVersion = "Xcode 14.0"; developmentRegion = ru; hasScannedForEncodings = 0; knownRegions = (ru, en, Base,); mainGroup = C8D2DC745BFC63C0D67231CE; productRefGroup = 0A3E27B8CA818264D75C8D81; projectDirPath = ""; projectRoot = ""; targets = (34A04005BCAF206EEC990BD9,); };
+	};
+	rootObject = 244210E48437B6556980A702;
+}
