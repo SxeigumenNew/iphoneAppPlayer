@@ -22,16 +22,19 @@ for object_id, body in objects.items():
         path = re.search(r'path = "([^"]+)";', body).group(1)
         assert (root / path).is_file(), f"Missing source: {path}"
         source_refs[object_id] = path
-actual_sources = {p.relative_to(root).as_posix() for p in (root / "Pulse").rglob("*.swift")}
+actual_sources = {p.relative_to(root).as_posix() for folder in ["Pulse", "PulseUITests"] for p in (root / folder).rglob("*.swift")}
 assert set(source_refs.values()) == actual_sources, "Source files missing from project"
 build_refs = {}
 for object_id, body in objects.items():
     if "isa = PBXBuildFile;" in body:
         build_refs[object_id] = re.search(r"fileRef = ([A-F0-9]{24});", body).group(1)
-phase = next(body for body in objects.values() if "isa = PBXSourcesBuildPhase;" in body)
-phase_ids = re.findall(r"\b[A-F0-9]{24}\b", phase)
-assert len(phase_ids) == len(set(phase_ids)), "Duplicate source build entry"
-assert {build_refs[key] for key in phase_ids} == source_refs.keys()
+compiled_sources = []
+for phase in (body for body in objects.values() if "isa = PBXSourcesBuildPhase;" in body):
+    phase_ids = re.findall(r"\b[A-F0-9]{24}\b", phase)
+    assert len(phase_ids) == len(set(phase_ids)), "Duplicate source build entry"
+    compiled_sources.extend(build_refs[key] for key in phase_ids)
+assert len(compiled_sources) == len(set(compiled_sources)), "Source belongs to multiple targets"
+assert set(compiled_sources) == source_refs.keys()
 
 with (root / "Pulse/Info.plist").open("rb") as handle:
     info = plistlib.load(handle)
@@ -48,7 +51,7 @@ for reference in scheme.findall(".//BuildableReference"):
     assert "isa = PBXNativeTarget;" in objects[target]
 assert scheme.find(".//LaunchAction/BuildableProductRunnable") is not None
 
-print(f"PASS: {len(actual_sources)} Swift files referenced exactly once in Sources phase")
+print(f"PASS: {len(actual_sources)} Swift files referenced exactly once across Sources phases")
 print(f"PASS: {len(objects)} project objects resolve; shared scheme targets Pulse")
 print("PASS: Info.plist and asset JSON parse; iOS 17 and background audio configured")
 print("NOT RUN: Swift compilation, App Intents extraction, simulator/device checks (requires Xcode)")

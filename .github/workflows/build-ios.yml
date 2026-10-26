@@ -7,6 +7,7 @@ on:
     paths:
       - 'Pulse/**'
       - 'Pulse.xcodeproj/**'
+      - 'PulseUITests/**'
       - '.github/workflows/build-ios.yml'
       - 'validate_project.py'
 
@@ -81,3 +82,67 @@ jobs:
           path: build/xcodebuild.log
           if-no-files-found: ignore
           retention-days: 7
+
+  ui-tests:
+    runs-on: macos-15
+    timeout-minutes: 20
+    steps:
+      - name: Check out project
+        uses: actions/checkout@v4
+
+      - name: Select an available iPhone simulator
+        id: simulator
+        run: |
+          set -euo pipefail
+          mkdir -p build
+          xcrun simctl list devices available --json > build/simulators.json
+          pulse_simulator_id=$(python3 - <<'PY'
+          import json
+          import re
+          from pathlib import Path
+          devices = json.loads(Path('build/simulators.json').read_text())['devices']
+          candidates = []
+          for runtime, values in devices.items():
+              if '.iOS-' not in runtime:
+                  continue
+              version = tuple(map(int, re.findall(r'\d+', runtime.split('.iOS-')[1])))
+              for device in values:
+                  if device.get('isAvailable') and device['name'].startswith('iPhone'):
+                      candidates.append((version, device['udid']))
+          if not candidates:
+              raise SystemExit('No available iPhone simulator found')
+          print(max(candidates)[1])
+          PY
+          )
+          echo "device_id=$pulse_simulator_id" >> "$GITHUB_OUTPUT"
+
+      - name: Check folder and file picker presentation
+        run: |
+          set -euo pipefail
+          pulse_simulator_id='${{ steps.simulator.outputs.device_id }}'
+          xcrun simctl boot "$pulse_simulator_id" || true
+          xcrun simctl bootstatus "$pulse_simulator_id" -b
+          xcodebuild \
+            -project Pulse.xcodeproj \
+            -scheme Pulse \
+            -configuration Debug \
+            -destination "platform=iOS Simulator,id=$pulse_simulator_id" \
+            -derivedDataPath build/UITestDerivedData \
+            -resultBundlePath build/ImportPickerTests.xcresult \
+            -parallel-testing-enabled NO \
+            -only-testing:PulseUITests/ImportPickerTests \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            test 2>&1 | tee build/ui-tests.log
+
+      - name: Upload UI test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Pulse-UI-test-results
+          path: |
+            build/ImportPickerTests.xcresult
+            build/ui-tests.log
+          if-no-files-found: ignore
+          retention-days: 7
+

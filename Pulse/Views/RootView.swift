@@ -1,12 +1,20 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
+private enum MusicImportMode {
+    case folders, files
+
+    var contentTypes: [UTType] {
+        self == .folders ? [.folder] : [.audio, .mpeg4Movie]
+    }
+}
+
 struct RootView: View {
     @EnvironmentObject private var library: LibraryStore
     @EnvironmentObject private var player: PlayerStore
     @State private var showPlayer = false
-    @State private var importFolder = false
-    @State private var importFiles = false
+    @State private var importMode = MusicImportMode.files
+    @State private var showImporter = false
 
     var body: some View {
         TabView {
@@ -26,8 +34,11 @@ struct RootView: View {
             }.tabItem { Label("Папки", systemImage: "folder.fill") }
         }
         .sheet(isPresented: $showPlayer) { PlayerView() }
-        .fileImporter(isPresented: $importFolder, allowedContentTypes: [.folder], allowsMultipleSelection: true) { handleImport($0, folder: true) }
-        .fileImporter(isPresented: $importFiles, allowedContentTypes: [.audio, .mpeg4Movie], allowsMultipleSelection: true) { handleImport($0, folder: false) }
+        // A single presentation host handles both modes. Stacking two fileImporter
+        // modifiers on this view can suppress the first (folder) presentation.
+        .fileImporter(isPresented: $showImporter, allowedContentTypes: importMode.contentTypes, allowsMultipleSelection: true) {
+            handleImport($0, folder: importMode == .folders)
+        }
         .alert("Pulse", isPresented: Binding(get: { library.message != nil }, set: { if !$0 { library.message = nil } })) {
             Button("OK") { library.message = nil }
         } message: { Text(library.message ?? "") }
@@ -41,11 +52,19 @@ struct RootView: View {
             if library.isScanning { ProgressView().accessibilityLabel("Сканирование музыки") }
             else {
                 Menu {
-                    Button("Выбрать папки", systemImage: "folder.badge.plus") { importFolder = true }
-                    Button("Выбрать файлы", systemImage: "doc.badge.plus") { importFiles = true }
+                    Button("Выбрать папки", systemImage: "folder.badge.plus") {
+                        importMode = .folders
+                        showImporter = true
+                    }.accessibilityIdentifier("importFolders")
+                    Button("Выбрать файлы", systemImage: "doc.badge.plus") {
+                        importMode = .files
+                        showImporter = true
+                    }.accessibilityIdentifier("importAudioFiles")
                     Button("Сканировать снова", systemImage: "arrow.clockwise") { Task { await library.rescan() } }
                 } label: { Image(systemName: "plus").frame(width: 44, height: 44) }
-                    .accessibilityLabel("Добавить музыку").disabled(!library.canWrite)
+                    .accessibilityLabel("Добавить музыку")
+                    .accessibilityIdentifier("addMusic")
+                    .disabled(!library.canWrite)
             }
         }
     }
@@ -53,7 +72,11 @@ struct RootView: View {
     private func handleImport(_ result: Result<[URL], Error>, folder: Bool) {
         switch result {
         case .success(let urls): Task { await library.importURLs(urls, rememberFolders: folder) }
-        case .failure(let error): library.message = error.localizedDescription
+        case .failure(let error):
+            let failure = error as NSError
+            if failure.domain != NSCocoaErrorDomain || failure.code != NSUserCancelledError {
+                library.message = error.localizedDescription
+            }
         }
     }
 }
