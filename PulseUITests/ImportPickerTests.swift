@@ -24,7 +24,10 @@ final class ImportPickerTests: XCTestCase {
     private func openAndCancel(_ action: String, in app: XCUIApplication) {
         let addMusic = app.buttons["addMusic"]
         XCTAssertTrue(addMusic.waitForExistence(timeout: 10))
-        addMusic.tap()
+        // SwiftUI toolbar menus can lack the AX scroll action used by tap().
+        // Tap the visible centre as a finger would; still assert the actual
+        // menu item and system picker below.
+        addMusic.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
         let menuItem = app.buttons[action]
         XCTAssertTrue(menuItem.waitForExistence(timeout: 5))
         menuItem.tap()
