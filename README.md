@@ -17,7 +17,9 @@
 
 ## Как установить
 
-**Нет Mac?** В проект добавлена сборка через GitHub Actions с последующей локальной подписью и установкой через Sideloadly на Windows. См. [пошаговую инструкцию](INSTALL-WINDOWS.md). Сборка не требует Apple ID или секретов в GitHub. Workflow подготовлен, но ещё не запускался в GitHub.
+**Нет Mac?** В проект добавлена сборка через GitHub Actions с последующей локальной подписью и установкой через Sideloadly на Windows. См. [пошаговую инструкцию](INSTALL-WINDOWS.md). Сборка не требует Apple ID или секретов в GitHub. Workflow успешно выполнен на Xcode 16.4.
+
+Готовая сборка: [успешный запуск Actions](https://github.com/SxeigumenNew/iphoneAppPlayer/actions/runs/40288536100). В разделе **Artifacts** скачайте **Pulse-iPhone-unsigned**, распакуйте ZIP и передайте `Pulse-unsigned.ipa` в Sideloadly. Артефакт хранится 7 дней; затем запустите workflow повторно. Скачать исходники можно через **Code → Download ZIP** в этом репозитории.
 
 Для установки напрямую через Xcode нужны Mac, Xcode 16 или новее и iPhone с iOS 17 или новее. Сторонние зависимости и XcodeGen не требуются.
 
@@ -57,7 +59,7 @@ xcodebuild -project Pulse.xcodeproj -scheme Pulse -configuration Debug -sdk ipho
 
 ## Проверки и статус
 
-Подготовлены исходники и проект Xcode. В среде разработки Linux отсутствуют Xcode и iOS SDK: сборка, App Intents metadata extraction, запуск, подпись и проверка на iPhone **не выполнены**. Проверены plist/JSON, структура проекта, ссылки на исходники и схема. Это исходная версия для сборки и проверки, не готовый подписанный IPA.
+26 октября 2026 года в GitHub Actions успешно выполнена Release-сборка для физического iPhone на Xcode 16.4 / iOS SDK 18.5 с минимальной версией iOS 17. Пройдены компиляция Swift, извлечение метаданных App Intents, упаковка и проверка структуры IPA. Дополнительно проверены plist/JSON, структура проекта, ссылки на исходники и схема. Подпись, установка, запуск, звук и Siri на реальном iPhone **не проверены**. Артефакт содержит неподписанный IPA для локальной подписи в Sideloadly.
 
 Повторить проверку структуры проекта без Xcode: `python3 validate_project.py`. Эта проверка не проверяет синтаксис Swift и не заменяет сборку.
 
